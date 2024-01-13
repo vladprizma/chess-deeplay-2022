@@ -1,0 +1,35 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{dd MMM yyyy;HH:mm:ss.SSS} %-5level client.%C{0}.%M[%thread] - %msg%n%ex{5}%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RollingFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 'LOGS' here is a value to be read from the application's environment variable -->
+        <file>logs/logger.log</file>
+        <!-- please feel free to customize the log layout pattern -->
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%date{dd MMM yyyy;HH:mm:ss.SSS} %-5level client.%C{0}.%M[%thread] - %msg%n%ex{5}%n</Pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 1 MegaBytes -->
+            <fileNamePattern>logs/archived/logger-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+        <!--        <appender-ref ref="RollingFile" />-->
+    </root>
+
+</configuration>
